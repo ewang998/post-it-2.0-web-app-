@@ -1,0 +1,65 @@
+//add note action
+//take the text and generate the time at the time of submit
+
+import axios from 'axios';
+
+export const addnote = (note, id, time = "This item have no due date set") => {
+    //dont add message that have no text
+    if (note === null || note === "") {
+      return {
+          type: "IGNORE",
+    }
+  }
+
+    if (time === "this item is due on  of ") {
+        time ="This item have no due date set"
+    }
+
+  //making call to backend to add note to list of notes
+  axios.post('http://localhost:5000/notes', {
+      id: id,
+      text: note,
+      date: time
+  }).then(() => console.log('posted'))
+      .catch(err => {
+        console.error(err);
+      });
+
+
+  return {
+      type: "ADD_NOTE",
+      payload: {
+        id: id,
+        text: note,
+        date: time
+      }
+    };
+};
+
+
+
+//delete note action
+//delete the note from store with the text
+export const deletenote = id => {
+
+  console.log(id)
+
+  axios.delete('http://localhost:5000/delete', {
+    data: {id: id}
+  }).then(() => console.log('deleted'))
+      .catch(err => {
+        console.error(err);
+      });
+
+  return {
+      type: "DELETE_NOTE",
+      payload: id
+    };
+};
+
+export const selectnote = id => {
+  return {
+      type: "SELECT_NOTE",
+      payload: id
+    };
+};
