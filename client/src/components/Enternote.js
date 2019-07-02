@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import { connect } from "react-redux";
 import { addnote } from "../actions";
 
@@ -11,6 +12,7 @@ class Enternote extends React.Component {
       month: ''
     };
     this.handlechange = this.handlechange.bind(this);
+    this.submitonclick = this.submitonclick.bind(this);
   }
 
   handlechange(e) {
@@ -29,6 +31,20 @@ class Enternote extends React.Component {
     }
     console.log(this.state)
   }
+
+  submitonclick() {
+    this.props.addnote(this.state.textvalue, this.props.currentid, 'this item is due on ' + this.state.day + ' of ' + this.state.month);
+    if (this.state.textvalue !== "") {
+      axios.post('http://localhost:5000/notes', {
+          id: this.props.currentid,
+          text: this.state.textvalue,
+          date: 'this item is due on ' + this.state.day + ' of ' + this.state.month
+      }).then(() => console.log("action is called"))
+          .catch(err => {
+            console.error(err);
+          });
+  }
+}
 
   render() {
     return (
@@ -58,7 +74,7 @@ class Enternote extends React.Component {
                  </select>
             </div>
           <br />
-        <button class="ui primary button" onClick={() => this.props.addnote(this.state.textvalue, this.props.currentid, 'this item is due on ' + this.state.day + ' of ' + this.state.month)}>submit</button>
+        <button class="ui primary button" onClick={this.submitonclick}>submit</button>
 
       </div>
       //{() => this.prop.addnote(document.getElementById("inputtext").value, this.props.currentid)}

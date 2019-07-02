@@ -15,15 +15,6 @@ export const addnote = (note, id, time = "This item have no due date set") => {
         time ="This item have no due date set"
     }
 
-  //making call to backend to add note to list of notes
-  axios.post('http://localhost:5000/notes', {
-      id: id,
-      text: note,
-      date: time
-  }).then(() => console.log('posted'))
-      .catch(err => {
-        console.error(err);
-      });
 
 
   return {
@@ -42,11 +33,11 @@ export const addnote = (note, id, time = "This item have no due date set") => {
 //delete the note from store with the text
 export const deletenote = id => {
 
-  console.log(id)
+
 
   axios.delete('http://localhost:5000/delete', {
     data: {id: id}
-  }).then(() => console.log('deleted'))
+  }).then()
       .catch(err => {
         console.error(err);
       });

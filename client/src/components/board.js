@@ -8,7 +8,7 @@ import Detail from './Detail';
 
 class Board extends React.Component {
 
-  componentDidMount() {
+  componentWillMount(props) {
 
 
 
@@ -19,8 +19,21 @@ class Board extends React.Component {
 
     loadloadednotes().then(notes => {
 
+
         for (var i=0; i<notes.data.length; i++) {
-            this.props.addnote(notes.data[i].text, notes.data[i].id, notes.data[i].time);
+          var notesinstore = this.props.notes;
+
+          var found = notesinstore.some(function(obj) {
+              return obj.id === notes.data[i].id;
+          });
+          if (!found) {
+
+             this.props.addnote(notes.data[i].text, notes.data[i].id, notes.data[i].time);
+          }
+
+
+
+
         }
     })
     .catch(err => console.error(err))

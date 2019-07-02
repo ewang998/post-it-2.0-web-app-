@@ -1,4 +1,7 @@
+
+
 const express = require('express');
+const mongoose = require('mongoose');
 var cors = require('cors')
 const app = express();
 const port = process.env.PORT || 5000;
@@ -10,39 +13,86 @@ app.use(cors())
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-// create a GET route
-// app.get('/express_backend', (req, res) => {
-//   res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-// });
-let notes = [];
-let loadednotes = [{ id: 0, text: 'click on me to show detail about notes', date: ""},
-                   { id: 1, text: 'click the button to the right to delete this message', date: ""}];
+//db initialize
+mongoose.connect('mongodb://localhost:27017/notes', {useNewUrlParser: true});
+
+const NotesSchema = new mongoose.Schema({
+  id: Number,
+  text: String,
+  date: String
+});
+
+const Note = mongoose.model("Note", NotesSchema);
+
+const note1 = new Note ({ id: 0, text: 'test DB 1 click on me to show detail about notes', date: ''});
+const note2 = new Note ({ id: 1, text: 'click the button to the right to delete this message', date: ''});
+
+const defaultNotes = [note1, note2];
+
+
+
+
+
+//some helper method
+// check if an element exists in array using a comparer function
+// comparer : function(currentElement)
+Array.prototype.inArray = function(comparer) {
+    for(var i=0; i < this.length; i++) {
+        if(comparer(this[i])) return true;
+    }
+    return false;
+};
+
+// adds an element to the array if it does not already exist using a comparer
+// function
+Array.prototype.pushIfNotExist = function(element, comparer) {
+    if (!this.inArray(comparer)) {
+
+    }
+};
+
 
 /* GET users listing. */
 app.get('/loadednotes', function(req, res, next) {
-  if(notes.length > 0) {
-     res.json(notes);
-  } else {
-    res.json(loadednotes);
-  }
+    Note.find({}, function(err, foundNotes) {
+      if (foundNotes.length === 0) {
+
+        Note.insertMany(defaultNotes, function(err){
+            if(err) {
+              console.log(err);
+            } else {
+              console.log("successfully loaded default notes")
+            }
+        });
+      } else {
+        res.json(foundNotes);
+}
+    })
 });
 
-app.get('/notes', function(req, res, next) {
 
-    res.json(notes);
-
-});
 
 app.post('/notes', function(req, res, next) {
-  new_note = req.body
-  notes.push(new_note)
-  res.json(notes)
+
+  const input = req.body
+
+  const new_note = new Note(
+    input
+   );
+
+  new_note.save();
+
+  res.redirect('/loadednotes');
 });
 
 app.delete('/delete', function(req, res, next) {
-    console.log(req.body.id)
-    console.log(notes)
-    notes = notes.filter(note => note.id !== req.body.id)
-    console.log(notes)
-    res.json({ message: 'Deleted' })
+    const deleteid = req.body.id;
+
+
+    Note.deleteMany({'id': deleteid}, function(err) {
+      if(!err) { console.log("deleted")}
+      res.redirect('/loadednotes');
+    });
+
+
 });

@@ -14,7 +14,7 @@ const notesReducer = (notes = [], action) => {
 };
 
 const notesidReducer = (currentid = 0, action) => {
-console.log('cur id is:', currentid)
+
   if (action.type === "ADD_NOTE") {
       return currentid+1;
     }
