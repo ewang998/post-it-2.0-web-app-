@@ -14,7 +14,7 @@ app.use(cors())
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 //db initialize
-mongoose.connect('mongodb://localhost:27017/notes', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://m001-student:m001-eric@sandbox-i21go.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 const NotesSchema = new mongoose.Schema({
   id: Number,
