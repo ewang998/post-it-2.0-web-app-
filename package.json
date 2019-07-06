@@ -13,6 +13,9 @@
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+      "node": "v10.15.3"
+    },
   "bugs": {
     "url": "https://github.com/ewang998/post-it/issues"
   },
