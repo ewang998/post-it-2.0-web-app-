@@ -18,7 +18,7 @@ if (port == null || port == "") {
 }
 
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log("listening on port"));
 
 //db initialize
 mongoose.connect('mongodb+srv://m001-student:m001-eric@sandbox-i21go.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
