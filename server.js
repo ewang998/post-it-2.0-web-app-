@@ -60,7 +60,7 @@ Array.prototype.pushIfNotExist = function(element, comparer) {
 
 
 /* GET users listing. */
-app.get('/loadednotes', function(req, res, next) {
+app.get('/', function(req, res, next) {
     Note.find({}, function(err, foundNotes) {
       if (foundNotes.length === 0) {
 
