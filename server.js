@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 var cors = require('cors')
 const app = express();
+var path = require('path'); 
 app.use(express.static(path.join(__dirname, 'client/build')));
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: true}));
