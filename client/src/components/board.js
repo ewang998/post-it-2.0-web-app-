@@ -14,7 +14,7 @@ class Board extends React.Component {
 
      //pre-stored note
     let loadloadednotes = async() => {
-      return await axios.get('/');
+      return await axios.get('/loadednotes');
     }
 
     loadloadednotes().then(notes => {

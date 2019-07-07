@@ -61,7 +61,7 @@ Array.prototype.pushIfNotExist = function(element, comparer) {
 
 
 /* GET users listing. */
-app.get('/', function(req, res, next) {
+app.get('/loadednotes', function(req, res, next) {
     Note.find({}, function(err, foundNotes) {
       if (foundNotes.length === 0) {
 
@@ -90,7 +90,7 @@ app.post('/notes', function(req, res, next) {
 
   new_note.save();
 
-  res.redirect('/');
+  res.redirect('/loadednotes');
 });
 
 app.delete('/delete', function(req, res, next) {
@@ -99,7 +99,7 @@ app.delete('/delete', function(req, res, next) {
 
     Note.deleteMany({'id': deleteid}, function(err) {
       if(!err) { console.log("deleted")}
-      res.redirect('/');
+      res.redirect('/loadednotes');
     });
 
 

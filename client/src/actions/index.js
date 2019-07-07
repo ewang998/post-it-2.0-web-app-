@@ -35,7 +35,7 @@ export const deletenote = id => {
 
 
 
-  axios.delete('http://localhost:5000/delete', {
+  axios.delete('/delete', {
     data: {id: id}
   }).then()
       .catch(err => {
