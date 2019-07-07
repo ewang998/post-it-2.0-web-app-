@@ -13,7 +13,7 @@ app.use(cors())
 
 // console.log that your server is up and running
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
@@ -61,7 +61,7 @@ Array.prototype.pushIfNotExist = function(element, comparer) {
 
 
 /* GET users listing. */
-app.get(port, function(req, res, next) {
+app.get('/', function(req, res, next) {
     Note.find({}, function(err, foundNotes) {
       if (foundNotes.length === 0) {
 
@@ -80,7 +80,7 @@ app.get(port, function(req, res, next) {
 
 
 
-app.post(port, function(req, res, next) {
+app.post('/notes', function(req, res, next) {
 
   const input = req.body
 
@@ -90,16 +90,16 @@ app.post(port, function(req, res, next) {
 
   new_note.save();
 
-  res.redirect(port);
+  res.redirect('/');
 });
 
-app.delete(port, function(req, res, next) {
+app.delete('/delete', function(req, res, next) {
     const deleteid = req.body.id;
 
 
     Note.deleteMany({'id': deleteid}, function(err) {
       if(!err) { console.log("deleted")}
-      res.redirect(port);
+      res.redirect('/');
     });
 
 
