@@ -35,7 +35,7 @@ class Enternote extends React.Component {
   submitonclick() {
     this.props.addnote(this.state.textvalue, this.props.currentid, 'this item is due on ' + this.state.day + ' of ' + this.state.month);
     if (this.state.textvalue !== "") {
-      axios.post('http://localhost:5000/notes', {
+      axios.post('http://localhost:5000/', {
           id: this.props.currentid,
           text: this.state.textvalue,
           date: 'this item is due on ' + this.state.day + ' of ' + this.state.month

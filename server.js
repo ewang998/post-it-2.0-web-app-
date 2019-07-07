@@ -80,7 +80,7 @@ app.get('/', function(req, res, next) {
 
 
 
-app.post('/notes', function(req, res, next) {
+app.post('/', function(req, res, next) {
 
   const input = req.body
 
@@ -99,7 +99,7 @@ app.delete('/delete', function(req, res, next) {
 
     Note.deleteMany({'id': deleteid}, function(err) {
       if(!err) { console.log("deleted")}
-      res.redirect('/loadednotes');
+      res.redirect('/');
     });
 
 
