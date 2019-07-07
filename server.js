@@ -4,7 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 var cors = require('cors')
 const app = express();
-var path = require('path'); 
+var path = require('path');
 app.use(express.static(path.join(__dirname, 'client/build')));
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: true}));
@@ -13,7 +13,7 @@ app.use(cors())
 
 // console.log that your server is up and running
 
-let port = process.env.PORT;
+let port = process.env.PORT || 3000;
 if (port == null || port == "") {
   port = 3000;
 }
@@ -90,7 +90,7 @@ app.post('/notes', function(req, res, next) {
 
   new_note.save();
 
-  res.redirect('/loadednotes');
+  res.redirect('/');
 });
 
 app.delete('/delete', function(req, res, next) {
