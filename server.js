@@ -97,7 +97,7 @@ app.delete('/delete', function(req, res, next) {
     const deleteid = req.body.id;
 
 
-    Note.deleteMany({'id': deleteid}, function(err) {
+    Note.deleteOne({'id': deleteid}, function(err) {
       if(!err) { console.log("deleted")}
       res.redirect('/loadednotes');
     });
